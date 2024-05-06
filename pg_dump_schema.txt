@@ -1,0 +1,204 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 16.2
+-- Dumped by pg_dump version 16.2
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: matches; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.matches (
+    fixture_id character varying(255) NOT NULL,
+    fixture_referee character varying(255),
+    fixture_timezone character varying(255),
+    fixture_date character varying(255),
+    fixture_venue_id character varying(255),
+    fixture_venue_name character varying(255),
+    fixture_venue_city character varying(255),
+    fixture_status character varying(255),
+    fixture_ft character varying(255),
+    league_round character varying(255),
+    home_id character varying(255),
+    home_name character varying(255),
+    home_logo character varying(255),
+    home_result character varying(255),
+    away_id character varying(255),
+    away_name character varying(255),
+    away_logo character varying(255),
+    away_result character varying(255),
+    home_goals character varying(255),
+    away_goals character varying(255)
+);
+
+
+ALTER TABLE public.matches OWNER TO postgres;
+
+--
+-- Name: players; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.players (
+    player_id character varying(255) NOT NULL,
+    player_name character varying(255),
+    player_first_name character varying(255),
+    player_last_name character varying(255),
+    player_age character varying(255),
+    player_birth_date character varying(255),
+    player_birth_place character varying(255),
+    player_birth_country character varying(255),
+    player_nationality character varying(255),
+    player_photo character varying(255),
+    team_id character varying(255),
+    team_name character varying(255),
+    player_position character varying(255)
+);
+
+
+ALTER TABLE public.players OWNER TO postgres;
+
+--
+-- Name: standings; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.standings (
+    rank character varying(255),
+    team_id character varying(255) NOT NULL,
+    team_name character varying(255),
+    team_logo character varying(255),
+    points character varying(255),
+    goal_differential character varying(255),
+    form character varying(255),
+    status character varying(255),
+    description character varying(255),
+    games_played character varying(255),
+    games_won character varying(255),
+    games_drawn character varying(255),
+    games_lost character varying(255),
+    goals_scored character varying(255),
+    goals_conceded character varying(255),
+    last_updated character varying(255)
+);
+
+
+ALTER TABLE public.standings OWNER TO postgres;
+
+--
+-- Name: teams; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.teams (
+    team_id character varying(255) NOT NULL,
+    team_name character varying(255),
+    team_country character varying(255),
+    team_founded character varying(255),
+    team_logo character varying(255),
+    venue_id character varying(255),
+    venue_name character varying(255),
+    venue_address character varying(255),
+    venue_city character varying(255),
+    venue_capacity character varying(255)
+);
+
+
+ALTER TABLE public.teams OWNER TO postgres;
+
+--
+-- Name: top_scorers; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.top_scorers (
+    player_id character varying(255) NOT NULL,
+    player_name character varying(255),
+    player_first_name character varying(255),
+    player_last_name character varying(255),
+    total_goals character varying(255),
+    player_position character varying(255),
+    player_nationality character varying(255),
+    team_id character varying(255),
+    team_name character varying(255),
+    appearances character varying(255),
+    started character varying(255),
+    minutes character varying(255),
+    rating character varying(255),
+    total_shots character varying(255),
+    shots_on_target character varying(255),
+    assists character varying(255),
+    yellow_cards character varying(255),
+    yellow_then_red character varying(255),
+    red_cards character varying(255),
+    penalties_scored character varying(255),
+    penalties_missed character varying(255)
+);
+
+
+ALTER TABLE public.top_scorers OWNER TO postgres;
+
+--
+-- Name: matches fixture_id; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.matches
+    ADD CONSTRAINT fixture_id PRIMARY KEY (fixture_id);
+
+
+--
+-- Name: players player_id; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.players
+    ADD CONSTRAINT player_id PRIMARY KEY (player_id);
+
+
+--
+-- Name: standings standings_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.standings
+    ADD CONSTRAINT standings_pkey PRIMARY KEY (team_id);
+
+
+--
+-- Name: teams teams_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.teams
+    ADD CONSTRAINT teams_pkey PRIMARY KEY (team_id);
+
+
+--
+-- Name: top_scorers top_scorers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.top_scorers
+    ADD CONSTRAINT top_scorers_pkey PRIMARY KEY (player_id);
+
+
+--
+-- Name: matches home_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.matches
+    ADD CONSTRAINT home_id FOREIGN KEY (home_id) REFERENCES public.teams(team_id) NOT VALID;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
